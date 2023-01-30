@@ -1,0 +1,235 @@
+<!-- 
+    "StAuth10244: I Yash Patel, 000842226 certify that this material is my original work.No other person's work has been used without due acknowledgement. I have not made my work available to anyone else."
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Flipping Coin!</title>
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+
+</head>
+<style>
+    .up
+    {
+        width: 60px;
+        height: 50px;
+        background-color: green;
+        color: white;
+        border-radius: 20px;
+    }
+    .down
+    {
+        width: 60px;
+        height: 50px;
+        background-color:  green;
+        color: white;
+        border-radius: 20px;
+    }
+    .heading
+    {
+        background-color: lightgreen;
+        color: black;
+        text-align: center;
+    }
+    .numberCoin
+    {
+        border: 1px solid black;
+        background-color: lightgreen;
+        border-radius: 20px;
+
+    }
+    .switch
+    {
+        border: 1px solid black;
+        background-color: lightyellow;
+        border-radius: 20px;
+    }
+    .switchButton
+    {
+        width:120px;
+        height: 40px;
+        border-radius: 20px;
+        background-color: coral;
+    }
+    .flip
+    {
+        background-color: aqua;
+        border: 1px solid black;
+        border-radius: 20px;
+
+    }
+    .flipButton
+    {
+        background-color: darkblue;
+        color: white;
+        width: 100%;
+        height: 80px;
+        font-size: 60px;
+        border-radius: 20px;
+    }
+    img
+    {
+        height: 100px;
+    }
+    .result
+    {
+        background-color: rgb(56, 86, 141);
+        color: white;
+ 
+    }
+   
+</style>
+<body>
+<h1 class="heading">
+    Flipping  Coins
+</h1>
+    <div id="app"></div>
+
+    <script type="text/babel">
+
+
+        class Coin extends React.Component 
+        {
+
+            constructor (props)
+            {
+                    super (props);
+
+                    this.state = {
+                        number: 4,
+                        mode: "Fair",
+                        heads: 0,
+                        tails: 0,
+                        random: 0
+                        
+                    }
+            }
+
+            increase()
+            {
+                let newNumber = this.state.number + 1;
+                this.setState({number : newNumber});
+            }
+
+            decrease()
+            {
+                if(this.state.number > 1) 
+                {
+                let newNumber = this.state.number - 1;
+                this.setState({number : newNumber});
+                }
+            }
+            modeChange()
+            {
+                let newstate =(this.state.mode == "Fair") ? "Biased" : "Fair";
+                this.setState({mode : newstate}) 
+
+                
+            }
+            flipCoin()
+            {
+
+
+                let numberOfCoins = this.state.number;
+
+                let randomNum  = this.state.random;
+                randomNum = Math.floor(Math.random() * 3);
+                
+       
+                
+                if(this.state.mode == "Fair")
+                {
+                    // heads
+                    let numHeads = Math.floor(Math.random() * numberOfCoins)
+                    this.setState({heads: numHeads})  
+                    // tails
+                    let numTails = numberOfCoins - numHeads
+                    this.setState({tails: numTails})
+                }
+                else
+                {
+
+                    let numTails = Math.floor(Math.random() * numberOfCoins) 
+                    this.setState({tails: numTails})  
+                    // tails
+                    let numHeads = numberOfCoins - numTails 
+                    this.setState({heads: numHeads})
+
+
+                }
+                
+            }
+            render()
+            {
+                return ( 
+                <div>
+                    <div className="numberCoin">
+                        <h1> &ensp; Number of Coins:&ensp;    {this.state.number} 
+                            &ensp;
+                            &emsp;&emsp;
+                            <button className="up" onClick = {this.increase.bind(this)}>
+                                UP
+                            
+                                </button>
+                                &ensp;
+                                <button className="down" onClick = {this.decrease.bind(this)}>
+                                Down
+                                </button>                        
+                        </h1>
+                    </div>
+                    <br />
+                    <div className="switch">
+                        <h1>&ensp; Mode:  {this.state.mode} 
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            <button className="switchButton" onClick={this.modeChange.bind(this)}
+                            > Switch Mode</button>
+                        </h1>
+                    </div>
+                    <br />
+
+                    <div className="flip">
+                        
+                        <h1> &ensp;Flip the Coin!!</h1>
+
+                        <button className="flipButton" onClick = {this.flipCoin.bind(this)}>Flip</button>
+                        <br /> <br />
+
+                        &ensp;
+                        <div>
+                            <h1 >
+                        <img src="img/heads.jpg" />
+                        ({this.state.heads})
+                        </h1>
+                        <h2>&ensp;Heads</h2>
+                        <h2 className="result">&ensp;
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            Total Number of Coins: {this.state.number} Heads: {this.state.heads} Tails: {this.state.tails}
+                            </h2>
+                        </div>
+                        <h1>
+                        <img src="img/tails.jpg" />
+                        ({this.state.tails})
+                        </h1>
+                        <h2>&ensp;
+                            Tails
+
+                            </h2>
+                    </div>
+                </div>
+
+                )
+            }
+        }        
+        const app = document.getElementById("app");
+        ReactDOM.render(
+        <div>
+            <Coin />
+                
+        </div>,app
+        )
+    </script>
+</body>
+</html>
